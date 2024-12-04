@@ -16,19 +16,15 @@ with open('../inputs/Day3Input.txt', 'r') as file:
 # with open('../inputs/Day3TestInputPt2.txt', 'r') as file:
 with open('../inputs/Day3Input.txt', 'r') as file:
 	total = 0
-	full_input = ''
-	for line in file:
-		full_input += line
-	enabled = True
+	full_input = file.read()
 	start = 0
-	while enabled:
+	while True:
 		donts = re.search('don\'t\(\)', full_input[start:])
 		if donts is None:
 			muls = re.findall('mul\(\d\d?\d?,\d\d?\d?\)', full_input[start:])
 			for mul in muls:
 				inputs = mul.strip('mul(,)').split(',')
 				total += int(inputs[0]) * int(inputs[1])
-			enabled = False
 			break
 		else:
 			end = donts.span()[0] + start
@@ -39,7 +35,6 @@ with open('../inputs/Day3Input.txt', 'r') as file:
 			
 			dos = re.search('do\(\)', full_input[end:])
 			if dos is None:
-				enabled = False
 				break
 			else:
 				start = end + dos.span()[1]
